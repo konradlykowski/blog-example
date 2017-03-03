@@ -5,17 +5,16 @@ import com.konrad.examples.blog.posts.filter.FilterFields;
 public class FilterFieldsToESFieldsAdapter {
 
     private final String searchBy;
-    private final static String[] esFields = {"tag", "category", "content", "location", "description"};
 
     public FilterFieldsToESFieldsAdapter(String searchBy) {
         this.searchBy = searchBy;
     }
 
-    public String[] getESFields() {
-        if (FilterFields.all.equals(searchBy)) {
-            return esFields;
+    public FilterFields[] getESFields() {
+        if (FilterFields.all.getFilterName().equals(searchBy)) {
+            return FilterFields.values();
         }
-        String[] oneField = {searchBy};
+        FilterFields[] oneField = {FilterFields.valueOf(searchBy)};
         return oneField;
     }
 }
