@@ -1,7 +1,7 @@
 package com.konrad.examples.blog.posts.filter;
 
 public enum FilterFields {
-    category("category"), location("location"), tag("tag"), all("all");
+    postId("postId"), content("content"), description("description"), category("category"), location("location"), tags("tags"), all("all"), carousel("carousel");
 
     private final String filterName;
 
@@ -9,5 +9,8 @@ public enum FilterFields {
         this.filterName = filterName;
     }
 
+    public String getFilterName() {
+        return this.filterName;
+    }
 
 }
