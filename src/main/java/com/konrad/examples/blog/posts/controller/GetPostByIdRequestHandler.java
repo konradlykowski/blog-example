@@ -5,6 +5,7 @@ import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 import com.konrad.examples.blog.elasticsearch.ElasticSearchClient;
 import com.konrad.examples.blog.posts.input.validators.DefaultInputValidator;
 import com.konrad.examples.blog.posts.repository.PostsRepository;
+import com.konrad.examples.blog.response.writer.ResponseHeaderCorsDecorated;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -39,6 +40,7 @@ public class GetPostByIdRequestHandler implements RequestStreamHandler {
             responseJson.put("error", e.getMessage());
         } finally {
             OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
+            responseJson.put("headers", (new ResponseHeaderCorsDecorated()).getHeaders());
             writer.write(responseJson.toJSONString());
             writer.close();
         }
