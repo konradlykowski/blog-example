@@ -4,6 +4,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
+import com.konrad.examples.blog.response.writer.ResponseHeaderCorsDecorated;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -120,6 +121,7 @@ public class RequestHandlerController implements RequestStreamHandler {
 
         logger.log(responseJson.toJSONString());
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
+        responseJson.put("headers", (new ResponseHeaderCorsDecorated()).getHeaders());
         writer.write(responseJson.toJSONString());
         writer.close();
     }
