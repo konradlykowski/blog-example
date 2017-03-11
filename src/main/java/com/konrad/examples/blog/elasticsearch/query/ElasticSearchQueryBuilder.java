@@ -1,24 +1,35 @@
 package com.konrad.examples.blog.elasticsearch.query;
 
 import com.konrad.examples.blog.comments.domain.Comment;
+import com.konrad.examples.blog.posts.filter.FilterFields;
 
 import java.util.Calendar;
 
 public class ElasticSearchQueryBuilder {
 
     private int from = 0;
-    private String[] searchBy;
+    private FilterFields[] searchBy;
     private String searchWith;
     private Comment comment;
+    private int size;
 
     public ElasticSearchQueryBuilder(int from) {
         this.from = from;
+        this.size = 7;
     }
 
-    public ElasticSearchQueryBuilder(int from, String[] searchBy, String searchWith) {
+    public ElasticSearchQueryBuilder(int from, FilterFields[] searchBy, String searchWith) {
         this.from = from;
         this.searchBy = searchBy;
         this.searchWith = searchWith;
+        this.size = 7;
+    }
+
+    public ElasticSearchQueryBuilder(int from, FilterFields[] searchBy, String searchWith, int size) {
+        this.from = from;
+        this.searchBy = searchBy;
+        this.searchWith = searchWith;
+        this.size = size;
     }
 
     public ElasticSearchQueryBuilder(Comment comment) {
@@ -26,7 +37,7 @@ public class ElasticSearchQueryBuilder {
     }
 
     public String getQuery() {
-        return "{" + "\"from\":" + from + ",\"size\":7," + "\"query\":" + "{" +
+        return "{" + "\"from\":" + from + ",\"size\":" + +size + "," + "\"query\":" + "{" +
                 getMatchers(searchBy, searchWith) +
                 "}," + "\"sort\":{\"date\":{\"order\":\"desc\"}}" + "}";
     }
@@ -42,12 +53,12 @@ public class ElasticSearchQueryBuilder {
                 "}";
     }
 
-    private String getMatchers(String[] searchBy, String searchWith) {
+    private String getMatchers(FilterFields[] searchBy, String searchWith) {
         StringBuilder matchersQuery = new StringBuilder();
         if (searchBy != null && searchBy.length > 0) {
             matchersQuery.append("\"bool\": {\"should\": [");
-            for (String matcher : searchBy) {
-                matchersQuery.append("{ \"match\": { \"" + matcher + "\" : \"" + searchWith + "\"} },");
+            for (FilterFields matcher : searchBy) {
+                matchersQuery.append("{ \"match\": { \"" + matcher.getFilterName() + "\" : \"" + searchWith + "\"} },");
             }
             return matchersQuery.deleteCharAt(matchersQuery.length() - 1).append("]}").toString();
         }
