@@ -3,6 +3,7 @@ package com.konrad.examples.blog.comments.repository;
 import com.konrad.examples.blog.comments.domain.Comment;
 import com.konrad.examples.blog.elasticsearch.ElasticSearchClient;
 import com.konrad.examples.blog.elasticsearch.query.ElasticSearchQueryBuilder;
+import com.konrad.examples.blog.posts.filter.FilterFields;
 import org.springframework.web.client.RestTemplate;
 
 public class CommentsRepository {
@@ -14,8 +15,8 @@ public class CommentsRepository {
     }
 
     public String getCommentsByPostId(String postId) {
-        String[] searchBy = new String[]{"postId"};
-        return elasticSearchClient.executeQuery("/comments/_search", (new ElasticSearchQueryBuilder(0, searchBy, postId)).getQuery());
+        FilterFields[] searchBy = new FilterFields[]{FilterFields.postId};
+        return elasticSearchClient.executeQuery("/comments/_search", (new ElasticSearchQueryBuilder(0, searchBy, postId,500)).getQuery());
     }
 
     public String addComment(Comment comment) {
