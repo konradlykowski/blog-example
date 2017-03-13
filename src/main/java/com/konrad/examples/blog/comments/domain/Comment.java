@@ -1,18 +1,46 @@
 package com.konrad.examples.blog.comments.domain;
 
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Comment {
-    public String postId;
-    public String name;
+    @NotNull
+    @Size(min = 1)
+    public String postId = "";
+    @NotNull
+    @Size(min = 1, max = 30)
+    public String name = "";
     public String date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZ").format(new Date());
-    public String text;
-    public String email;
-    public String ip;
+    @NotNull
+    @Size(min = 1, max = 1500)
+    public String text = "";
+    @NotNull
+    @Size(min = 3, max = 30)
+    @Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
+    public String email = "";
+    @NotNull
+    @Size(min = 7, max = 15)
+    @Pattern(regexp = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
+    public String ip = "192.168.192.129";
+    @NotNull
+    @Size(min = 7, max = 15)
+    public String browserData = "";
 
     public Comment() {
 
+    }
+
+    public String getBrowserData() {
+        return browserData;
+    }
+
+    public void setBrowserData(String browserData) {
+        this.browserData = browserData;
     }
 
     public String getPostId() {
@@ -36,7 +64,7 @@ public class Comment {
     }
 
     public void setDate(String date) {
-        this.date = date;
+        this.date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZ").format(new Date());
     }
 
     public String getText() {
