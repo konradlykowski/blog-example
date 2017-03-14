@@ -2,6 +2,7 @@ package com.konrad.examples.blog;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.konrad.examples.blog.posts.filter.FilterFields;
+import com.konrad.examples.blog.response.writer.ResponseHeaderCorsDecorated;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -57,6 +58,7 @@ public class SearchPostsFromRequestHandler {
             responseJson.put("exception", pex);
         } finally {
             OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
+            responseJson.put("headers", (new ResponseHeaderCorsDecorated()).getHeaders());
             writer.write(responseJson.toJSONString());
             writer.close();
         }
