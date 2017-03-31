@@ -8,6 +8,7 @@ import com.konrad.examples.blog.comments.repository.CommentsRepository;
 import com.konrad.examples.blog.elasticsearch.ElasticSearchClient;
 import com.konrad.examples.blog.posts.input.validators.CommentsInputValidator;
 import com.konrad.examples.blog.posts.input.validators.DefaultInputValidator;
+import com.konrad.examples.blog.response.writer.ResponseHeaderCorsDecorated;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -39,15 +40,17 @@ public class AddCommentRequestHandler implements RequestStreamHandler {
             responseJson.put("body", responseBody.toString());
         } catch (ParseException | IOException | NullPointerException e) {
             responseJson.put("statusCode", "400");
+            responseJson.put("error", e.getMessage());
         } finally {
             OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
+            responseJson.put("headers", (new ResponseHeaderCorsDecorated()).getHeaders());
             writer.write(responseJson.toJSONString());
             writer.close();
         }
     }
 
     private Comment getComment(JSONObject event) throws ParseException, NullPointerException, IOException {
-        return (new ObjectMapper()).readValue(new CommentsInputValidator().validate(((JSONObject) parser.parse(event.get("body").toString())).get("comment").toString()), Comment.class);
+        return (new CommentsInputValidator()).validate((new ObjectMapper()).readValue((((JSONObject) parser.parse(event.get("body").toString())).get("comment").toString()), Comment.class));
     }
 
 
