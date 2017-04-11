@@ -1,10 +1,8 @@
-package com.konrad.examples.blog.comments.controller.repository;
+package com.konrad.examples.blog.comments.repository;
 
 import com.konrad.examples.blog.elasticsearch.ElasticSearchClient;
 import com.konrad.examples.blog.elasticsearch.query.ElasticSearchQueryBuilder;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.LinkedList;
 
 public class CommentsRepository {
     private final RestTemplate restTemplate;
@@ -16,11 +14,8 @@ public class CommentsRepository {
     }
 
     public String getCommentsByPostId(String postId) {
-        return elasticSearchClient.executeQuery("/comments/_search", (new ElasticSearchQueryBuilder(0, new LinkedList<String>() {
-            {
-                add("postId");
-            }
-        }, postId)).getQuery(), String.class).getBody();
+        String[] searchBy = new String[]{postId};
+        return elasticSearchClient.executeQuery("/comments/_search", (new ElasticSearchQueryBuilder(0, searchBy, postId)).getQuery());
     }
 
 }
