@@ -1,4 +1,4 @@
-package com.konrad.examples.blog;
+package com.konrad.examples.blog.comments;
 
 import org.springframework.web.client.RestTemplate;
 
