@@ -12,7 +12,7 @@ public class FilterFieldsToESFieldsAdapter {
     }
 
     public String[] getESFields() {
-        if (FilterFields.ALL.equals(searchBy)) {
+        if (FilterFields.all.equals(searchBy)) {
             return esFields;
         }
         String[] oneField = {searchBy};
