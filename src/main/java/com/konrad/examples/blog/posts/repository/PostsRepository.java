@@ -31,5 +31,6 @@ public class PostsRepository {
     public String filterPostsBy(int from, String by, String what) {
         LOG.info("posts/_search");
         return elasticSearchClient.executeQuery("posts/_search", (new ElasticSearchQueryBuilder(from, (new FilterFieldsToESFieldsAdapter(by)).getESFields(), what)).getQuery());
+        //return (new ElasticSearchQueryBuilder(from, (new FilterFieldsToESFieldsAdapter(by)).getESFields(), what)).getQuery();
     }
 }
