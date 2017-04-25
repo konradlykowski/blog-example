@@ -12,20 +12,12 @@ public class ElasticSearchQueryBuilderTest {
     @Test
     public void getQueryNoMatchers() {
         ElasticSearchQueryBuilder elasticSearchQueryBuilder = new ElasticSearchQueryBuilder(2, null, null);
-        Assert.assertEquals("{\n" +
-                "\"from\" : 2, \"size\" : 7,    \"query\": {\n" +
-                "\"match_all\" : {}},\n" +
-                "    \"sort\": { \"date\": { \"order\": \"desc\" }}\n" +
-                "} ", elasticSearchQueryBuilder.getQuery());
+        Assert.assertEquals("{\"from\":2,\"size\":7,\"query\":{\"match_all\" : {}},\"sort\":{\"date\":{\"order\":\"desc\"}}}", elasticSearchQueryBuilder.getQuery());
     }
 
     @Test
     public void getQueryWithTwoMatchers() {
         ElasticSearchQueryBuilder elasticSearchQueryBuilder = new ElasticSearchQueryBuilder(2, (new String[]{"tags", "content", "location"}), "Zurich");
-        Assert.assertEquals("{\n" +
-                "\"from\" : 2, \"size\" : 7,    \"query\": {\n" +
-                "\"bool\": {\"should\": [{ \"match\": { \"tags\" : \"Zurich\"} },{ \"match\": { \"content\" : \"Zurich\"} },{ \"match\": { \"location\" : \"Zurich\"} }]}},\n" +
-                "    \"sort\": { \"date\": { \"order\": \"desc\" }}\n" +
-                "} ", elasticSearchQueryBuilder.getQuery());
+        Assert.assertEquals("{\"from\":2,\"size\":7,\"query\":{\"bool\": {\"should\": [{ \"match\": { \"tags\" : \"Zurich\"} },{ \"match\": { \"content\" : \"Zurich\"} },{ \"match\": { \"location\" : \"Zurich\"} }]}},\"sort\":{\"date\":{\"order\":\"desc\"}}}", elasticSearchQueryBuilder.getQuery());
     }
 }
