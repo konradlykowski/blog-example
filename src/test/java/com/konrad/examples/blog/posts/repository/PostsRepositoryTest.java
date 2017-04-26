@@ -1,6 +1,8 @@
 package com.konrad.examples.blog.posts.repository;
 
 import com.konrad.examples.blog.elasticsearch.ElasticSearchClient;
+import com.konrad.examples.blog.posts.input.validators.DefaultInputValidator;
+import com.konrad.examples.blog.posts.input.validators.SearchByInputValidator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -25,7 +27,9 @@ public class PostsRepositoryTest {
 
     @Test
     public void getPostById() {
-        new PostsRepository(elasticSearchClient, restTemplate).getPostById("");
-        Mockito.verify(elasticSearchClient).executeGet("");
+        new PostsRepository(elasticSearchClient, restTemplate).getPostById("id");
+        Mockito.verify(elasticSearchClient).executeGet("posts/post/id");
     }
+
+
 }
