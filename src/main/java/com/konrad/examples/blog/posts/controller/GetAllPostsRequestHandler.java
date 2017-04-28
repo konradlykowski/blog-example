@@ -1,4 +1,4 @@
-package com.konrad.examples.blog.posts;
+package com.konrad.examples.blog.posts.controller;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
