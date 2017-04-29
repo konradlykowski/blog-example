@@ -11,7 +11,6 @@ public class ElasticSearchClient {
 
     public final static String ELASTIC_SEARCH_URL = "https://vpc-iglawpodrozy-6xrukndwc6cyellfdhpfu4y6ma.eu-central-1.es.amazonaws.com/";
     private RestTemplate restTemplate;
-    private final static Log LOG = LogFactory.getLog(ElasticSearchClient.class);
 
     public ElasticSearchClient executeOn(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -22,13 +21,10 @@ public class ElasticSearchClient {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         HttpEntity<String> entity = new HttpEntity(query, headers);
-        LOG.info(ELASTIC_SEARCH_URL + url);
-        LOG.info(entity.getBody().toString());
         return restTemplate.postForEntity(ELASTIC_SEARCH_URL + url, entity, String.class).getBody();
     }
 
     public String executeGet(String url) {
-        LOG.info(ELASTIC_SEARCH_URL + url);
         return restTemplate.getForEntity(ELASTIC_SEARCH_URL + url, String.class).getBody();
     }
 
