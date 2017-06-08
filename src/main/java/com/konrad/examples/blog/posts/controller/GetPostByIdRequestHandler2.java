@@ -40,7 +40,7 @@ public class GetPostByIdRequestHandler2 implements RequestHandler<Map<String, St
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         HttpEntity<String> entity = new HttpEntity("", headers);
         ResponseEntity<String> response = restTemplate.exchange(
-                "http://localhost:9200/posts/post/geometryczna-suknia-nowa.html",
+                "https://vpc-elasticigla-j4uv6iwavksdnr5rvrfxs7plei.eu-central-1.es.amazonaws.com/posts/post/geometryczna-suknia-nowa.html",
                 HttpMethod.GET, entity, String.class);
         System.out.println(response.toString());
         return response.toString();
