@@ -27,8 +27,8 @@ public class PostsRepositoryTest {
 
     @Test
     public void getPostById() {
-        new PostsRepository(elasticSearchClient, restTemplate).getPostById("id");
-        Mockito.verify(elasticSearchClient).executeGet("posts/post/id");
+        System.out.println(new PostsRepository(elasticSearchClient, restTemplate).getPostById("geometryczna-suknia-nowa-11.html"));
+        Mockito.verify(elasticSearchClient).executeGet("posts/post/geometryczna-suknia-nowa-11.html");
     }
 
 
