@@ -33,9 +33,12 @@ public class GetPostByIdRequestHandler implements RequestStreamHandler {
             JSONObject event = (JSONObject) parser.parse(new BufferedReader(new InputStreamReader(inputStream, "UTF-8")));
             JSONObject responseBody = new JSONObject();
             responseBody.put("post", (new PostsRepository(new ElasticSearchClient(), new RestTemplate()).getPostById(getPostId(event))));
+
+            responseBody.put("post", "posts/post/" + (new RestTemplate()).getForEntity("https://vpc-iglawpodrozy-6xrukndwc6cyellfdhpfu4y6ma.eu-central-1.es.amazonaws.com/posts/post/swiateczny-zurich" , String.class).getBody());
             responseJson.put("body", responseBody.toString());
-        } catch (ParseException | IOException | NullPointerException e) {
+        } catch (Exception e) {
             responseJson.put("statusCode", "400");
+            responseJson.put("error", e.getMessage());
         } finally {
             OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
             writer.write(responseJson.toJSONString());
