@@ -35,6 +35,7 @@ public class GetAllPostsRequestHandler implements RequestStreamHandler {
             responseJson.put("body", responseBody.toString());
         } catch (ParseException | IOException | NumberFormatException | NullPointerException e) {
             responseJson.put("statusCode", "400");
+            responseJson.put("error", e.getMessage());
         } finally {
             OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
             writer.write(responseJson.toJSONString());
