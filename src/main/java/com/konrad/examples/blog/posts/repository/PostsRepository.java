@@ -20,17 +20,19 @@ public class PostsRepository {
     }
 
     public String getAllPosts(int from) {
+        LOG.info((new ElasticSearchQueryBuilder(from)).getQuery());
         return elasticSearchClient.executeQuery("posts/_search", (new ElasticSearchQueryBuilder(from)).getQuery());
     }
 
     public String getPostById(String postId) {
-        LOG.info("posts/post/" + postId);
         return elasticSearchClient.executeGet("posts/post/" + postId);
     }
 
     public String filterPostsBy(int from, String by, String what) {
-        LOG.info("posts/_search");
         return elasticSearchClient.executeQuery("posts/_search", (new ElasticSearchQueryBuilder(from, (new FilterFieldsToESFieldsAdapter(by)).getESFields(), what)).getQuery());
-        //return (new ElasticSearchQueryBuilder(from, (new FilterFieldsToESFieldsAdapter(by)).getESFields(), what)).getQuery();
+    }
+
+    public String getLastThreeCarouselPosts() {
+        return elasticSearchClient.executeQuery("posts/_search", (new ElasticSearchQueryBuilder(0, new String[]{"carousel"}, "true")).getQuery());
     }
 }
