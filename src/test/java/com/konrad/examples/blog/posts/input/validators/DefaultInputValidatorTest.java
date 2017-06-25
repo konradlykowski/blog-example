@@ -13,4 +13,10 @@ public class DefaultInputValidatorTest {
         Assert.assertTrue("asd&#39;a&quot;s&lt;d".equals((new DefaultInputValidator()).validate("asd'a\"s<d")));
     }
 
+    @Test
+    public void validateProperInput() {
+        Assert.assertTrue("swiateczny-zurich.html".equals((new DefaultInputValidator()).validate("swiateczny-zurich.html")));
+    }
+
+
 }
