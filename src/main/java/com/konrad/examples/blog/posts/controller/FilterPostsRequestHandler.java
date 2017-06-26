@@ -51,7 +51,6 @@ public class FilterPostsRequestHandler implements RequestStreamHandler {
 
     private String getWhatParam(JSONObject event) throws ParseException, NullPointerException {
         return (new DefaultInputValidator().validate(((JSONObject) parser.parse(event.get("body").toString())).get("what").toString()));
-
     }
 
     private String getWhereParam(JSONObject event) throws ParseException, NullPointerException {
