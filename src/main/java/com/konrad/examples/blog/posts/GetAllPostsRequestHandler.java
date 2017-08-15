@@ -11,17 +11,17 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
 
-public class GetPostsFromRequestHandler implements RequestStreamHandler {
+public class GetAllPostsRequestHandler implements RequestStreamHandler {
 
     private final RestTemplate restTemplate;
     JSONParser parser = new JSONParser();
 
 
-    public GetPostsFromRequestHandler() {
+    public GetAllPostsRequestHandler() {
         restTemplate = new RestTemplate();
     }
 
-    public GetPostsFromRequestHandler(RestTemplate restTemplate) {
+    public GetAllPostsRequestHandler(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
@@ -29,11 +29,11 @@ public class GetPostsFromRequestHandler implements RequestStreamHandler {
     public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context) throws IOException {
         JSONObject responseJson = new JSONObject();
         try {
-            int from = getFromParam(new BufferedReader(new InputStreamReader(inputStream, "UTF-8")));
+            JSONObject event = (JSONObject) parser.parse(new BufferedReader(new InputStreamReader(inputStream, "UTF-8")));
             JSONObject responseBody = new JSONObject();
-            responseBody.put("posts", (new PostsRepository(new ElasticSearchClient(), new RestTemplate()).getAllPosts(from)));
+            responseBody.put("posts", (new PostsRepository(new ElasticSearchClient(), new RestTemplate()).getAllPosts(getFromParam(event))));
             responseJson.put("body", responseBody.toString());
-        } catch (ParseException | IOException e) {
+        } catch (ParseException | IOException | NumberFormatException | NullPointerException e) {
             responseJson.put("statusCode", "400");
         } finally {
             OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
@@ -42,16 +42,8 @@ public class GetPostsFromRequestHandler implements RequestStreamHandler {
         }
     }
 
-    private int getFromParam(BufferedReader reader) throws IOException, ParseException {
-        int from = 0;
-        JSONObject event = (JSONObject) parser.parse(reader);
-        if (event.get("queryStringParameters") != null) {
-            JSONObject qps = (JSONObject) event.get("queryStringParameters");
-            if (qps.get("from") != null) {
-                from = Integer.valueOf(qps.get("from").toString());
-            }
-        }
-        return from;
+    private int getFromParam(JSONObject event) throws NumberFormatException, NullPointerException {
+        return Integer.valueOf(((JSONObject) event.get("queryStringParameters")).get("from").toString());
     }
 
 
