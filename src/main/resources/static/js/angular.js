@@ -1,6 +1,6 @@
 var app = angular.module('iglaWPodrozy', ['ngAnimate', 'ngSanitize','ui.router', 'ui.bootstrap', 'ui.bootstrap.modal']);
 
-app.controller('NavBarController', function ($scope, PostsService, $rootScope) {
+app.controller('NavBarController', function ($scope, PostsService, $rootScope, $state) {
   $scope.isNavCollapsed = true;
   $scope.isCollapsed = false;
   $scope.isCollapsedHorizontal = false;
@@ -18,7 +18,7 @@ app.service('PostsService', function($http, $rootScope) {
     this.loadComments = function($scope, postId) {
         var req = {
          method: 'POST',
-         url: 'http://localhost:9200/comments/_search',
+         url: 'http://localhost:9200/comments/comment/_search',
          headers: {
            'Content-Type': 'application/json'
          },
@@ -28,8 +28,7 @@ app.service('PostsService', function($http, $rootScope) {
           }
         }
         $http(req).then(function(response) {
-        console.log(response.data.hits.hits)
-            $scope.comments = response.data.hits.hits;
+        $scope.comments = response.data.hits.hits;
         });
     };
     this.loadPost = function($scope, postId) {
