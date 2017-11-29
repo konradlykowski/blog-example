@@ -45,6 +45,7 @@ app.service('PostsService', function($http, $rootScope) {
             $scope.postId = response.data._source.id;
             $scope.tags = response.data._source.tags;
             $scope.title = response.data._source.title;
+            $scope.modalTitlePicture = response.data._source.modalTitlePicture;
         });
     };
     this.loadPosts = function(loadedPostsNumber, query) {
@@ -196,7 +197,7 @@ app.controller('AboutController', function($scope, $uibModalInstance) {
 });
 
 app.controller('ShowPostController', function($scope, $uibModalInstance, postId, PostsService) {
-  PostsService.loadPost($scope, 'geometryczna-suknia.html');
+  PostsService.loadPost($scope, 'geometryczna-suknia-nowa-11.html');
   $scope.comments = PostsService.loadComments($scope, 'geometryczna-suknia.html');
   $scope.addComment = function() {
     $scope.comments.push({name:$scope.name,text:$scope.text,email:$scope.email, date: new Date().toLocaleString()});
