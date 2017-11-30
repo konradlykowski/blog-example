@@ -94,7 +94,8 @@
                 <div class="line">
                     <span>{{post._source.date}}</span>
                 </div>
-                <span><a ui-sref="posts.search({query: 'category:{{post._source.category}}'})">{{post._source.category}}</a></span>
+                <span><a
+                        ui-sref="posts.search({query: 'category:{{post._source.category}}'})">{{post._source.category}}</a></span>
                 <br/><br/>
                 <img style="width:22px;margin-right:10px" src="img/needle.png">
                 <a ui-sref="posts.search({query: 'location:{{post._source.location}}'})">{{post._source.location}}</a>
@@ -118,7 +119,8 @@
                 <div class="line">
                     <span>{{post._source.date}}</span>
                 </div>
-                <span><a ui-sref="posts.search({query: 'category:{{post._source.category}}'})">{{post._source.category}}</a></span>
+                <span><a
+                        ui-sref="posts.search({query: 'category:{{post._source.category}}'})">{{post._source.category}}</a></span>
                 <br/><br/>
                 <img style="width:22px;margin-right:10px" src="img/needle.png">
                 <a ui-sref="posts.search({query: 'location:{{post._source.location}}'})">{{post._source.location}}</a>
@@ -140,12 +142,15 @@
             </div>
         </div>
     </div>
+    <br/>
     <div ng-show="!noMorePosts" class="text-center">
         <a ng-click="pageChanged()" class="btn btn-default">Laduj wiecej postow...</a>
     </div>
-
 </section>
 
+<div id="instagramText" class="line">
+    <span>@iglawpodrozy INSTAGRAM</span>
+</div>
 <iframe src="http://lightwidget.com/widgets/b356ebda6a3c53b0a817271e4a191bf8.html" scrolling="no"
         allowtransparency="true" class="lightwidget-widget"
         style="width: 100%; border: 0; overflow: hidden;"></iframe>
@@ -166,7 +171,7 @@
         <div class="modal-title">KONTAKT</div>
         <div style="text-align: center" class="modal-post-text center-block">
             W razie pytań zapraszam do kontaktu na e-mail<br/> <a href="mailto:martha.nowicka@outlook.com"
-                                                             target="_blank">martha.nowicka@outlook.com</a>
+                                                                  target="_blank">martha.nowicka@outlook.com</a>
             <div class="share-icons">
                 <a href="#"><i class="fa fa-facebook"></i></a>
                 <a href="#"><i class="fa fa-instagram"></i></a>
@@ -175,7 +180,8 @@
         <div class="container modal-post-text">
 
             <div ng-bind-html="content"></div>
-            <p style="text-align: right">Pozdrawiam,</p><p style="text-align: right;f">Marta Nowicka</p>
+            <p style="text-align: right">Pozdrawiam,</p>
+            <p style="text-align: right;f">Marta Nowicka</p>
         </div>
 
         <img ng-src="img/about/marta.JPG" class="img-responsive center-block" style="width:20%;">
@@ -198,11 +204,17 @@
     </div>
     <div class="modal-body">
         <div class="modal-title">{{title}}
-            <img ng-src="img/IMG_9508.JPG" style="width:100%;">
+            <img ng-src="{{modalTitlePicture}}" style="width:100%;">
         </div>
         <div class="container modal-post-text">
             <div ng-bind-html="content"></div>
         </div>
+        <img  src="img/opera2.JPG"/>
+        <img  src="img/opera5.JPG"/>
+        <img ng-src="img/opera3.JPG"/>
+        <img ng-src="img/opera4.JPG"/>
+        <img ng-src="img/opera6.JPG"/>
+        <img ng-src="img/opera7.JPG"/>
         <ul class="container modal-post-text tag-bar">
             <li ng-repeat="tag in tags"><a ng-click="forward(tag)" rel="tag">{{tag}}</a>
             </li>
