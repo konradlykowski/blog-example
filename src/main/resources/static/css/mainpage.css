@@ -29,6 +29,18 @@ p {
 #bigPicturesCarousel .padding-pictures {
     padding-top: 55px;
 }
+#instagramText {
+    text-align: center;
+    background: transparent url('img/strike.jpg') center center repeat-x;
+    padding: 30px;
+}
+
+#instagramText span {
+    background-color: white;
+    padding: 10px;
+    font-size: 15px;
+    letter-spacing: 0.25em;
+}
 
 .share-icons {
     text-align: center;
