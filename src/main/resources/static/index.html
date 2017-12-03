@@ -9,6 +9,7 @@
 
     <title>Igła w Podróży by Marta Nowicka</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,150" rel="stylesheet">
+    <link href="fonts/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
 
     <script src="vendor/angular.js"></script>
     <script src="vendor/angular-animate.js"></script>
@@ -57,7 +58,8 @@
                     <li style="display:flex">
                         <span style="padding-top:1px;padding-left:10px" class="glyphicon glyphicon-search"
                               aria-hidden="true"></span>
-                        <input ng-change="search(phrase)" ng-model="phrase" id="search" type="text" class="form-control no-border no-shadow" placeholder="SZUKAJ">
+                        <input ng-change="search(phrase)" ng-model="phrase" id="search" type="text"
+                               class="form-control no-border no-shadow" placeholder="SZUKAJ">
                     </li>
                 </ul>
             </div>
@@ -92,8 +94,11 @@
                 <div class="line">
                     <span>{{post._source.date}}</span>
                 </div>
-                <span><a href="#">{{post._source.category}}</a></span>
+                <span><a ui-sref="posts.search({query: 'category:{{post._source.category}}'})">{{post._source.category}}</a></span>
                 <br/><br/>
+                <img style="width:22px;margin-right:10px" src="img/needle.png">
+                <a ui-sref="posts.search({query: 'location:{{post._source.location}}'})">{{post._source.location}}</a>
+                <br/>
                 <div class="title">{{post._source.title}}</div>
                 <div class="description">{{post._source.description}}</div>
                 <br/>
@@ -101,7 +106,7 @@
                     <a href="#"><i class="fa fa-facebook"></i></a>
                     <a href="#"><i class="fa fa-instagram"></i></a>
                 </div>
-                <span><a href="">Komentarze | {{post._source.commentsCount}}</a></span>
+                <span>Komentarze | {{post._source.commentsCount}}</span>
                 <br/>
                 <a ui-sref="posts.show({postId: '{{post._source.id}}'})" class="button"><span></span>Czytaj
                     dalej</a>
@@ -113,8 +118,11 @@
                 <div class="line">
                     <span>{{post._source.date}}</span>
                 </div>
-                <span><a href="#">{{post._source.category}}</a></span>
+                <span><a ui-sref="posts.search({query: 'category:{{post._source.category}}'})">{{post._source.category}}</a></span>
                 <br/><br/>
+                <img style="width:22px;margin-right:10px" src="img/needle.png">
+                <a ui-sref="posts.search({query: 'location:{{post._source.location}}'})">{{post._source.location}}</a>
+                <br/>
                 <div class="title">{{post._source.title}}</div>
                 <div class="description">{{post._source.description}}</div>
                 <br/>
@@ -122,7 +130,7 @@
                     <a href="#"><i class="fa fa-facebook"></i></a>
                     <a href="#"><i class="fa fa-instagram"></i></a>
                 </div>
-                <span><a href="">Komentarze | {{post._source.commentsCount}}</a></span>
+                <span>Komentarze | {{post._source.commentsCount}}</span>
                 <br/>
                 <a ui-sref="posts.show({postId: '{{post._source.id}}'})" class="button"><span></span>Czytaj
                     dalej</a>
@@ -157,12 +165,20 @@
     <div class="modal-body">
         <div class="modal-title">KONTAKT</div>
         <div style="text-align: center" class="modal-post-text center-block">
-            W razie pytań zapraszam do kontaktu na email: <a href="mailto:martha.nowicka@outlook.com"
-                                                             target="_blank">martha.nowicka@outlook.com</a></div>
-        <img ng-src="img/about/marta.JPG" class="img-responsive center-block" style="width:25%;">
-        <div class="container modal-post-text">
-            <div ng-bind-html="content"></div>
+            W razie pytań zapraszam do kontaktu na e-mail<br/> <a href="mailto:martha.nowicka@outlook.com"
+                                                             target="_blank">martha.nowicka@outlook.com</a>
+            <div class="share-icons">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-instagram"></i></a>
+            </div>
         </div>
+        <div class="container modal-post-text">
+
+            <div ng-bind-html="content"></div>
+            <p style="text-align: right">Pozdrawiam,</p><p style="text-align: right;f">Marta Nowicka</p>
+        </div>
+
+        <img ng-src="img/about/marta.JPG" class="img-responsive center-block" style="width:20%;">
         <div class="container modal-footer">
             <a data-toggle="modal" ng-click="cancel()" class="button"><span></span>Zamknij</a>
         </div>
@@ -187,7 +203,7 @@
         <div class="container modal-post-text">
             <div ng-bind-html="content"></div>
         </div>
-        <ul class="container tag-bar">
+        <ul class="container modal-post-text tag-bar">
             <li ng-repeat="tag in tags"><a ng-click="forward(tag)" rel="tag">{{tag}}</a>
             </li>
         </ul>
