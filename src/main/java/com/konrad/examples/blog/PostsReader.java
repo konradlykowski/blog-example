@@ -59,4 +59,14 @@ public class PostsReader {
     }
 
 
+    public String getPostsByLocation(Integer from, String location) {
+        String query = "{\n" +
+                "\"from\" : " + from + ", \"size\" : 7," +
+                "    \"query\": {\n" +
+                "\"bool\": {\"should\": [{ \"match\": { \"location\" : \"" + location + "\"} }]}" +
+                "    },\n" +
+                "    \"sort\": { \"date\": { \"order\": \"desc\" }}\n" +
+                "} ";
+        return restTemplate.postForEntity(elasticSearchURL + "/posts/_search", query, String.class).getBody();
+    }
 }
