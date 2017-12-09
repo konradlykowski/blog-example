@@ -27,34 +27,31 @@ public class GetPostsFromRequestHandler implements RequestStreamHandler {
 
 
     public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
         JSONObject responseJson = new JSONObject();
-        int from = 0;
         try {
-            JSONObject event = (JSONObject) parser.parse(reader);
-            if (event.get("queryStringParameters") != null) {
-                JSONObject qps = (JSONObject) event.get("queryStringParameters");
-                if (qps.get("from") != null) {
-                    from = Integer.valueOf(qps.get("from").toString());
-                }
-            }
+            int from = getFromParam(new BufferedReader(new InputStreamReader(inputStream, "UTF-8")));
             JSONObject responseBody = new JSONObject();
-            try {
-                responseBody.put("posts", (new PostsRepository(new ElasticSearchClient(), new RestTemplate()).getAllPosts(from)));
-            } catch (Exception e) {
-                e.printStackTrace();
-                context.getLogger().log(e.getMessage());
-            }
+            responseBody.put("posts", (new PostsRepository(new ElasticSearchClient(), new RestTemplate()).getAllPosts(from)));
             responseJson.put("body", responseBody.toString());
-
-        } catch (ParseException pex) {
+        } catch (ParseException | IOException e) {
             responseJson.put("statusCode", "400");
-            responseJson.put("exception", pex);
         } finally {
             OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
             writer.write(responseJson.toJSONString());
             writer.close();
         }
+    }
+
+    private int getFromParam(BufferedReader reader) throws IOException, ParseException {
+        int from = 0;
+        JSONObject event = (JSONObject) parser.parse(reader);
+        if (event.get("queryStringParameters") != null) {
+            JSONObject qps = (JSONObject) event.get("queryStringParameters");
+            if (qps.get("from") != null) {
+                from = Integer.valueOf(qps.get("from").toString());
+            }
+        }
+        return from;
     }
 
 
