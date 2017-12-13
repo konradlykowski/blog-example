@@ -7,7 +7,7 @@ public class LengthValidator implements Validator<String> {
     private final int len;
 
     public LengthValidator() {
-        len = 30;
+        len = 150;
     }
 
     public LengthValidator(int len) {
