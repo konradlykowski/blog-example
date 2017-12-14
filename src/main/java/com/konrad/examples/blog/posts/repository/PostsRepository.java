@@ -2,6 +2,7 @@ package com.konrad.examples.blog.posts.repository;
 
 import com.konrad.examples.blog.elasticsearch.ElasticSearchClient;
 import com.konrad.examples.blog.elasticsearch.query.ElasticSearchQueryBuilder;
+import com.konrad.examples.blog.posts.filter.FilterFields;
 import com.konrad.examples.blog.posts.filter.adapter.FilterFieldsToESFieldsAdapter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -33,6 +34,6 @@ public class PostsRepository {
     }
 
     public String getLastThreeCarouselPosts() {
-        return elasticSearchClient.executeQuery("posts/_search", (new ElasticSearchQueryBuilder(0, new String[]{"carousel"}, "true")).getQuery());
+        return elasticSearchClient.executeQuery("posts/_search", (new ElasticSearchQueryBuilder(0, new FilterFields[]{FilterFields.carousel}, "true")).getQuery());
     }
 }
