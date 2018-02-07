@@ -1,1 +1,1 @@
-# igla-w-podrozy
+# Blog example in angularjs and html
